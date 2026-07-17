@@ -1,62 +1,39 @@
-#1 Workflow name (shown in the Actions tab)
 name: Generate Snake Animation
 
-#2 Events that trigger the workflow
 on:
-  #2.1 Automatically runs every 12 hours
+  # Automatically update every 12 hours
   schedule:
     - cron: "0 */12 * * *"
 
-  #2.2 Allows manual execution from the Actions tab
+  # Allow manual execution from the Actions tab
   workflow_dispatch:
 
-  #2.3 Runs whenever you push to the main branch
+  # Regenerate whenever your README or workflow changes
   push:
     branches:
       - main
 
-#3 Required permission to push files to the output branch
 permissions:
   contents: write
 
 jobs:
   generate:
-
-    #4 Runner operating system
     runs-on: ubuntu-latest
-
-    #5 Stop the workflow if it takes longer than 5 minutes
     timeout-minutes: 5
 
     steps:
-
-      #6 Generate the snake animation
       - name: Generate contribution snake
         uses: Platane/snk/svg-only@v3
         with:
-
-          #6.1 GitHub username
-          # Change only if you want another user's contribution graph
           github_user_name: ${{ github.repository_owner }}
-
-          #6.2 Output files
-          # Add/remove themes or filenames here
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      #7 Publish generated files to the output branch
       - name: Publish to output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
-
-          #7.1 Branch that stores the generated SVG files
           target_branch: output
-
-          #7.2 Folder containing the generated files
           build_dir: dist
-
         env:
-
-          #7.3 GitHub authentication token (do not change)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
