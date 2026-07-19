@@ -12,6 +12,9 @@
   </picture>
 </p>
 
+
+![snake gif](https://github.com/IamKirat/IamKirat/blob/output/github-snake-dark.svg)
+
 <!--
 **IamKirat/IamKirat** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
